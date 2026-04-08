@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: task_catalog
+      POSTGRES_USER: task_catalog
+      POSTGRES_PASSWORD: task_catalog
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U task_catalog -d task_catalog"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  app:
+    build:
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_DATASOURCE_URL: jdbc:postgresql://postgres:5432/task_catalog
+      APP_DATASOURCE_USERNAME: task_catalog
+      APP_DATASOURCE_PASSWORD: task_catalog
+      APP_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8080:8080"

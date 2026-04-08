@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: task-catalog
+  datasource:
+    url: ${APP_DATASOURCE_URL:jdbc:h2:mem:task_catalog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${APP_DATASOURCE_USERNAME:sa}
+    password: ${APP_DATASOURCE_PASSWORD:}
+    driver-class-name: ${APP_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+  flyway:
+    enabled: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+server:
+  port: ${APP_PORT:8080}
+
+logging:
+  level:
+    org.springframework.jdbc.core: warn

@@ -1,0 +1,9 @@
+.gradle/
+.kotlin/
+build/
+out/
+*.log
+bootrun*.log
+.env.local
+.env.server
+.env.repository

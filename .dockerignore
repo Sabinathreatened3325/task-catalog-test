@@ -1,0 +1,12 @@
+.gradle
+.kotlin
+build
+.git
+.github
+.gemini
+AGENTS.md
+out
+*.log
+.env.local
+.env.server
+.env.repository

